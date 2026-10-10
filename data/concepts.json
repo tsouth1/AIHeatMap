@@ -190,7 +190,7 @@
         { "id": "llm", "type": "part_of" }
       ],
       "resources": [
-        { "title": "Large language model (overview)", "type": "wiki", "url": "https://en.wikipedia.org/wiki/Large_language_model" }
+        { "title": "Context windows (Claude documentation)", "type": "docs", "url": "https://platform.claude.com/docs/en/build-with-claude/context-windows" }
       ]
     },
     {
@@ -205,7 +205,7 @@
         { "id": "rag", "type": "related_to" }
       ],
       "resources": [
-        { "title": "Embeddings (Google ML Crash Course)", "type": "course", "url": "https://developers.google.com/machine-learning/crash-course/embeddings/embedding-spaces" }
+        { "title": "Embeddings (Google ML Crash Course)", "type": "course", "url": "https://developers.google.com/machine-learning/crash-course/embeddings" }
       ]
     },
     {
@@ -250,7 +250,7 @@
         { "id": "fine-tuning", "type": "related_to" }
       ],
       "resources": [
-        { "title": "Training and loss (Google ML Crash Course)", "type": "course", "url": "https://developers.google.com/machine-learning/crash-course/linear-regression/gradient-descent" }
+        { "title": "Linear regression: Loss (Google ML Crash Course)", "type": "course", "url": "https://developers.google.com/machine-learning/crash-course/linear-regression/loss" }
       ]
     },
     {
@@ -264,7 +264,7 @@
         { "id": "llm", "type": "uses" }
       ],
       "resources": [
-        { "title": "Inference (Google ML Crash Course)", "type": "course", "url": "https://developers.google.com/machine-learning/crash-course/framing/ml-terminology" }
+        { "title": "Inference (Google ML Glossary)", "type": "docs", "url": "https://developers.google.com/machine-learning/glossary#inference" }
       ]
     },
     {
@@ -278,7 +278,7 @@
         { "id": "training", "type": "uses" }
       ],
       "resources": [
-        { "title": "Machine Learning Crash Course (Google)", "type": "course", "url": "https://developers.google.com/machine-learning/crash-course" }
+        { "title": "Supervised Learning (Google ML intro)", "type": "course", "url": "https://developers.google.com/machine-learning/intro-to-ml/supervised" }
       ]
     },
     {
@@ -366,7 +366,7 @@
         { "id": "prompt-engineering", "type": "related_to" }
       ],
       "resources": [
-        { "title": "AI safety (overview)", "type": "wiki", "url": "https://en.wikipedia.org/wiki/AI_safety" }
+        { "title": "NeMo Guardrails (open-source toolkit)", "type": "tool", "url": "https://github.com/NVIDIA-NeMo/Guardrails" }
       ]
     },
     {
