@@ -1,0 +1,448 @@
+{
+  "concepts": [
+    {
+      "id": "machine-learning",
+      "name": "Machine Learning",
+      "aliases": ["ML"],
+      "category": "field",
+      "definition": "Machine learning is a field of AI where computers learn patterns from data instead of following hand-written rules. A model is trained on examples and then makes predictions on new data.",
+      "related": [
+        { "id": "supervised-learning", "type": "related_to" },
+        { "id": "reinforcement-learning", "type": "related_to" },
+        { "id": "training", "type": "related_to" },
+        { "id": "deep-learning", "type": "related_to" }
+      ],
+      "resources": [
+        { "title": "Machine Learning Crash Course (Google)", "type": "course", "url": "https://developers.google.com/machine-learning/crash-course" }
+      ]
+    },
+    {
+      "id": "deep-learning",
+      "name": "Deep Learning",
+      "aliases": ["DL"],
+      "category": "field",
+      "definition": "Deep learning is a branch of machine learning that uses neural networks with many layers. It works well on images, audio, and text because it can learn complex features on its own.",
+      "related": [
+        { "id": "machine-learning", "type": "part_of" },
+        { "id": "neural-network", "type": "uses" }
+      ],
+      "resources": [
+        { "title": "Deep Learning (book, free online)", "type": "book", "url": "https://www.deeplearningbook.org" }
+      ]
+    },
+    {
+      "id": "natural-language-processing",
+      "name": "Natural Language Processing",
+      "aliases": ["NLP"],
+      "category": "field",
+      "definition": "Natural language processing is the area of AI concerned with understanding and generating human language. It covers tasks such as translation, summarizing, and answering questions.",
+      "related": [
+        { "id": "llm", "type": "related_to" },
+        { "id": "chatbot", "type": "related_to" },
+        { "id": "transformer", "type": "related_to" }
+      ],
+      "resources": [
+        { "title": "Natural language processing (overview)", "type": "wiki", "url": "https://en.wikipedia.org/wiki/Natural_language_processing" }
+      ]
+    },
+    {
+      "id": "computer-vision",
+      "name": "Computer Vision",
+      "aliases": [],
+      "category": "field",
+      "definition": "Computer vision is the area of AI that enables computers to interpret images and video. Applications include face unlocking, medical image analysis, and self-driving car perception.",
+      "related": [
+        { "id": "deep-learning", "type": "uses" },
+        { "id": "diffusion-model", "type": "related_to" },
+        { "id": "multimodal-model", "type": "related_to" }
+      ],
+      "resources": [
+        { "title": "Computer vision (overview)", "type": "wiki", "url": "https://en.wikipedia.org/wiki/Computer_vision" }
+      ]
+    },
+    {
+      "id": "neural-network",
+      "name": "Neural Network",
+      "aliases": ["Artificial Neural Network", "ANN"],
+      "category": "architecture",
+      "definition": "A neural network is a model made of connected layers of simple units that pass numbers forward and adjust their connection strengths during training. It is the basic building block of deep learning.",
+      "related": [
+        { "id": "deep-learning", "type": "related_to" },
+        { "id": "transformer", "type": "related_to" },
+        { "id": "training", "type": "related_to" }
+      ],
+      "resources": [
+        { "title": "But what is a neural network? (3Blue1Brown video)", "type": "video", "url": "https://www.youtube.com/watch?v=aircAruvnKk" }
+      ]
+    },
+    {
+      "id": "transformer",
+      "name": "Transformer",
+      "aliases": [],
+      "category": "architecture",
+      "definition": "A transformer is a neural network design that processes all parts of an input at once using attention. Most modern large language models are built on this architecture.",
+      "related": [
+        { "id": "attention", "type": "uses" },
+        { "id": "neural-network", "type": "extends" },
+        { "id": "llm", "type": "related_to" }
+      ],
+      "resources": [
+        { "title": "Attention Is All You Need (original paper)", "type": "paper", "url": "https://arxiv.org/abs/1706.03762" }
+      ]
+    },
+    {
+      "id": "attention",
+      "name": "Attention",
+      "aliases": ["Self-Attention", "Attention Mechanism"],
+      "category": "concept",
+      "definition": "Attention is a mechanism that lets a model weigh which parts of its input matter most for each output. In language, it helps a word take meaning from the other words around it.",
+      "related": [
+        { "id": "transformer", "type": "part_of" }
+      ],
+      "resources": [
+        { "title": "The Illustrated Transformer (article)", "type": "article", "url": "https://jalammar.github.io/illustrated-transformer/" }
+      ]
+    },
+    {
+      "id": "diffusion-model",
+      "name": "Diffusion Model",
+      "aliases": ["Diffusion"],
+      "category": "architecture",
+      "definition": "A diffusion model creates images by learning to reverse a process that gradually adds noise to images. Generating starts from random noise and removes it step by step until a picture appears.",
+      "related": [
+        { "id": "neural-network", "type": "uses" },
+        { "id": "multimodal-model", "type": "related_to" },
+        { "id": "computer-vision", "type": "related_to" }
+      ],
+      "resources": [
+        { "title": "Denoising Diffusion Probabilistic Models (paper)", "type": "paper", "url": "https://arxiv.org/abs/2006.11239" }
+      ]
+    },
+    {
+      "id": "llm",
+      "name": "Large Language Model",
+      "aliases": ["LLM"],
+      "category": "model",
+      "definition": "A large language model is an AI system trained on very large amounts of text to predict and generate language. It powers chatbots and many writing and coding tools.",
+      "related": [
+        { "id": "transformer", "type": "depends_on" },
+        { "id": "token", "type": "uses" },
+        { "id": "context-window", "type": "related_to" },
+        { "id": "hallucination", "type": "related_to" },
+        { "id": "open-source-model", "type": "related_to" }
+      ],
+      "resources": [
+        { "title": "Large language model (overview)", "type": "wiki", "url": "https://en.wikipedia.org/wiki/Large_language_model" }
+      ]
+    },
+    {
+      "id": "multimodal-model",
+      "name": "Multimodal Model",
+      "aliases": ["Multimodal AI"],
+      "category": "model",
+      "definition": "A multimodal model can work with more than one type of data, such as text, images, and audio. It can, for example, answer questions about a photo you upload.",
+      "related": [
+        { "id": "llm", "type": "extends" },
+        { "id": "computer-vision", "type": "related_to" },
+        { "id": "diffusion-model", "type": "related_to" }
+      ],
+      "resources": [
+        { "title": "Multimodal learning (overview)", "type": "wiki", "url": "https://en.wikipedia.org/wiki/Multimodal_learning" }
+      ]
+    },
+    {
+      "id": "open-source-model",
+      "name": "Open-Source Model",
+      "aliases": ["Open-Weight Model"],
+      "category": "model",
+      "definition": "An open-source or open-weight model is an AI model whose trained parameters are publicly released so anyone can download, run, or modify it, subject to its license.",
+      "related": [
+        { "id": "llm", "type": "related_to" },
+        { "id": "benchmark", "type": "related_to" }
+      ],
+      "resources": [
+        { "title": "Hugging Face model hub", "type": "docs", "url": "https://huggingface.co/models" }
+      ]
+    },
+    {
+      "id": "token",
+      "name": "Token",
+      "aliases": [],
+      "category": "concept",
+      "definition": "A token is a small piece of text, often a word or part of a word, that a language model reads and writes one at a time. Usage limits and costs are often measured in tokens.",
+      "related": [
+        { "id": "llm", "type": "part_of" },
+        { "id": "embedding", "type": "related_to" },
+        { "id": "context-window", "type": "related_to" }
+      ],
+      "resources": [
+        { "title": "OpenAI Tokenizer (interactive tool)", "type": "tool", "url": "https://platform.openai.com/tokenizer" }
+      ]
+    },
+    {
+      "id": "context-window",
+      "name": "Context Window",
+      "aliases": ["Context Length"],
+      "category": "concept",
+      "definition": "The context window is the maximum amount of text, measured in tokens, that a language model can consider at one time. Information outside the window is not visible to the model.",
+      "related": [
+        { "id": "token", "type": "depends_on" },
+        { "id": "llm", "type": "part_of" }
+      ],
+      "resources": [
+        { "title": "Large language model (overview)", "type": "wiki", "url": "https://en.wikipedia.org/wiki/Large_language_model" }
+      ]
+    },
+    {
+      "id": "embedding",
+      "name": "Embedding",
+      "aliases": ["Vector Embedding"],
+      "category": "concept",
+      "definition": "An embedding turns a piece of text, an image, or other data into a list of numbers that captures its meaning. Items with similar meanings get similar numbers, which makes search by meaning possible.",
+      "related": [
+        { "id": "token", "type": "depends_on" },
+        { "id": "vector-database", "type": "related_to" },
+        { "id": "rag", "type": "related_to" }
+      ],
+      "resources": [
+        { "title": "Embeddings (Google ML Crash Course)", "type": "course", "url": "https://developers.google.com/machine-learning/crash-course/embeddings/embedding-spaces" }
+      ]
+    },
+    {
+      "id": "vector-database",
+      "name": "Vector Database",
+      "aliases": ["Vector Store"],
+      "category": "concept",
+      "definition": "A vector database stores embeddings and finds the ones closest in meaning to a query quickly. It is a common storage layer for retrieval-based AI applications.",
+      "related": [
+        { "id": "embedding", "type": "depends_on" },
+        { "id": "rag", "type": "part_of" }
+      ],
+      "resources": [
+        { "title": "Vector database (overview)", "type": "wiki", "url": "https://en.wikipedia.org/wiki/Vector_database" }
+      ]
+    },
+    {
+      "id": "rag",
+      "name": "RAG",
+      "aliases": ["Retrieval-Augmented Generation"],
+      "category": "technique",
+      "definition": "Retrieval-Augmented Generation is a method where a system first searches a set of documents for relevant text and gives it to a language model. The model then answers using that material, which helps with accuracy and recent information.",
+      "related": [
+        { "id": "vector-database", "type": "depends_on" },
+        { "id": "embedding", "type": "depends_on" },
+        { "id": "llm", "type": "uses" },
+        { "id": "hallucination", "type": "related_to" }
+      ],
+      "resources": [
+        { "title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP (paper)", "type": "paper", "url": "https://arxiv.org/abs/2005.11401" }
+      ]
+    },
+    {
+      "id": "training",
+      "name": "Training",
+      "aliases": ["Model Training"],
+      "category": "technique",
+      "definition": "Training is the process of adjusting a model's parameters using data so its predictions improve. It is the expensive step that comes before a model is used.",
+      "related": [
+        { "id": "machine-learning", "type": "part_of" },
+        { "id": "inference", "type": "related_to" },
+        { "id": "fine-tuning", "type": "related_to" }
+      ],
+      "resources": [
+        { "title": "Training and loss (Google ML Crash Course)", "type": "course", "url": "https://developers.google.com/machine-learning/crash-course/linear-regression/gradient-descent" }
+      ]
+    },
+    {
+      "id": "inference",
+      "name": "Inference",
+      "aliases": [],
+      "category": "technique",
+      "definition": "Inference is using a trained model to produce an output, such as an answer or a prediction, for new input. It is what happens each time you send a message to a chatbot.",
+      "related": [
+        { "id": "training", "type": "related_to" },
+        { "id": "llm", "type": "uses" }
+      ],
+      "resources": [
+        { "title": "Inference (Google ML Crash Course)", "type": "course", "url": "https://developers.google.com/machine-learning/crash-course/framing/ml-terminology" }
+      ]
+    },
+    {
+      "id": "supervised-learning",
+      "name": "Supervised Learning",
+      "aliases": [],
+      "category": "technique",
+      "definition": "Supervised learning trains a model on examples that come with correct answers, such as photos labeled with what they show. The model learns to predict the label for new examples.",
+      "related": [
+        { "id": "machine-learning", "type": "part_of" },
+        { "id": "training", "type": "uses" }
+      ],
+      "resources": [
+        { "title": "Machine Learning Crash Course (Google)", "type": "course", "url": "https://developers.google.com/machine-learning/crash-course" }
+      ]
+    },
+    {
+      "id": "reinforcement-learning",
+      "name": "Reinforcement Learning",
+      "aliases": ["RL"],
+      "category": "technique",
+      "definition": "Reinforcement learning trains an agent by rewarding good actions and penalizing bad ones through trial and error. It is used in game-playing AI and to help align language models with human preferences.",
+      "related": [
+        { "id": "machine-learning", "type": "part_of" },
+        { "id": "llm", "type": "related_to" }
+      ],
+      "resources": [
+        { "title": "Reinforcement Learning: An Introduction (free book)", "type": "book", "url": "http://incompleteideas.net/book/the-book.html" }
+      ]
+    },
+    {
+      "id": "fine-tuning",
+      "name": "Fine-Tuning",
+      "aliases": ["Finetuning"],
+      "category": "technique",
+      "definition": "Fine-tuning continues training an existing model on a smaller, specific dataset so it performs better for a particular task or style. It is cheaper than training a model from scratch.",
+      "related": [
+        { "id": "training", "type": "extends" },
+        { "id": "lora", "type": "related_to" },
+        { "id": "llm", "type": "uses" }
+      ],
+      "resources": [
+        { "title": "Fine-tuning guide (Hugging Face)", "type": "docs", "url": "https://huggingface.co/docs/transformers/training" }
+      ]
+    },
+    {
+      "id": "lora",
+      "name": "LoRA",
+      "aliases": ["Low-Rank Adaptation"],
+      "category": "technique",
+      "definition": "LoRA is a fine-tuning method that trains a small set of added parameters instead of changing the whole model. This makes customizing large models much less costly in memory and compute.",
+      "related": [
+        { "id": "fine-tuning", "type": "part_of" },
+        { "id": "llm", "type": "uses" }
+      ],
+      "resources": [
+        { "title": "LoRA: Low-Rank Adaptation of Large Language Models (paper)", "type": "paper", "url": "https://arxiv.org/abs/2106.09685" }
+      ]
+    },
+    {
+      "id": "prompt-engineering",
+      "name": "Prompt Engineering",
+      "aliases": ["Prompting"],
+      "category": "technique",
+      "definition": "Prompt engineering is the practice of writing clear instructions, examples, and context so a language model gives better answers. It requires no changes to the model itself.",
+      "related": [
+        { "id": "llm", "type": "uses" },
+        { "id": "hallucination", "type": "related_to" },
+        { "id": "guardrails", "type": "related_to" }
+      ],
+      "resources": [
+        { "title": "Prompting Guide", "type": "docs", "url": "https://www.promptingguide.ai" }
+      ]
+    },
+    {
+      "id": "hallucination",
+      "name": "Hallucination",
+      "aliases": ["AI Hallucination"],
+      "category": "concept",
+      "definition": "A hallucination is when an AI model produces information that sounds confident but is false or made up. It is a known limitation of language models, so answers should be checked for important facts.",
+      "related": [
+        { "id": "llm", "type": "related_to" },
+        { "id": "rag", "type": "related_to" },
+        { "id": "guardrails", "type": "related_to" }
+      ],
+      "resources": [
+        { "title": "Survey of Hallucination in Natural Language Generation (paper)", "type": "paper", "url": "https://arxiv.org/abs/2202.03629" }
+      ]
+    },
+    {
+      "id": "guardrails",
+      "name": "Guardrails",
+      "aliases": ["AI Guardrails"],
+      "category": "technique",
+      "definition": "Guardrails are rules, filters, and checks placed around an AI system to limit harmful, off-topic, or unsafe outputs. They can run before a request reaches the model or after it responds.",
+      "related": [
+        { "id": "hallucination", "type": "related_to" },
+        { "id": "ai-agent", "type": "related_to" },
+        { "id": "prompt-engineering", "type": "related_to" }
+      ],
+      "resources": [
+        { "title": "AI safety (overview)", "type": "wiki", "url": "https://en.wikipedia.org/wiki/AI_safety" }
+      ]
+    },
+    {
+      "id": "benchmark",
+      "name": "Benchmark",
+      "aliases": ["AI Benchmark"],
+      "category": "concept",
+      "definition": "A benchmark is a standard set of tests used to compare AI models on tasks such as reasoning, coding, or language understanding. Scores help people compare models, though they do not capture everything.",
+      "related": [
+        { "id": "llm", "type": "related_to" },
+        { "id": "open-source-model", "type": "related_to" },
+        { "id": "machine-learning", "type": "related_to" }
+      ],
+      "resources": [
+        { "title": "Holistic Evaluation of Language Models (HELM)", "type": "docs", "url": "https://crfm.stanford.edu/helm/" }
+      ]
+    },
+    {
+      "id": "ai-agent",
+      "name": "AI Agent",
+      "aliases": ["Agent", "AI Agents"],
+      "category": "architecture",
+      "definition": "An AI agent is a system that uses a language model to pursue a goal across several steps. It can plan, call tools, check results, and adjust its approach without a person directing every step.",
+      "related": [
+        { "id": "llm", "type": "uses" },
+        { "id": "tool-use", "type": "uses" },
+        { "id": "mcp", "type": "uses" },
+        { "id": "guardrails", "type": "related_to" }
+      ],
+      "resources": [
+        { "title": "Intelligent agent (overview)", "type": "wiki", "url": "https://en.wikipedia.org/wiki/Intelligent_agent" }
+      ]
+    },
+    {
+      "id": "tool-use",
+      "name": "Tool Use",
+      "aliases": ["Function Calling"],
+      "category": "technique",
+      "definition": "Tool use lets a language model request actions such as searching the web, running code, or reading a calendar. The system runs the action and returns the result to the model.",
+      "related": [
+        { "id": "llm", "type": "related_to" },
+        { "id": "ai-agent", "type": "part_of" },
+        { "id": "mcp", "type": "related_to" }
+      ],
+      "resources": [
+        { "title": "Tool use with Claude (documentation)", "type": "docs", "url": "https://docs.anthropic.com/en/docs/build-with-claude/tool-use/overview" }
+      ]
+    },
+    {
+      "id": "mcp",
+      "name": "Model Context Protocol",
+      "aliases": ["MCP"],
+      "category": "protocol",
+      "definition": "The Model Context Protocol is an open standard that lets AI applications connect to outside tools and data sources in a consistent way. A single MCP server can serve many different AI clients.",
+      "related": [
+        { "id": "tool-use", "type": "related_to" },
+        { "id": "ai-agent", "type": "related_to" }
+      ],
+      "resources": [
+        { "title": "Model Context Protocol (official site)", "type": "docs", "url": "https://modelcontextprotocol.io" }
+      ]
+    },
+    {
+      "id": "chatbot",
+      "name": "Chatbot",
+      "aliases": ["Conversational AI"],
+      "category": "application",
+      "definition": "A chatbot is a program that holds a conversation in natural language. Modern chatbots are usually built on large language models.",
+      "related": [
+        { "id": "llm", "type": "uses" },
+        { "id": "natural-language-processing", "type": "depends_on" },
+        { "id": "prompt-engineering", "type": "related_to" }
+      ],
+      "resources": [
+        { "title": "Chatbot (overview)", "type": "wiki", "url": "https://en.wikipedia.org/wiki/Chatbot" }
+      ]
+    }
+  ]
+}

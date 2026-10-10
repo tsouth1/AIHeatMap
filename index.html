@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Ecosystem Navigator (POC)</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <h1>AI Ecosystem Navigator</h1>
+    <p class="intro">Click a concept to see what it means and how it connects to others. Drag nodes, scroll to zoom.</p>
+    <div class="search-row">
+      <input id="search" type="search" placeholder="Search a concept, e.g. RAG or MCP" autocomplete="off" aria-label="Search concepts">
+      <ul id="search-results" class="search-results" hidden></ul>
+      <button id="reset" type="button">Reset view</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="graph-wrap" aria-label="Concept graph">
+      <svg id="graph" role="img" aria-label="Graph of AI concepts"></svg>
+      <div id="legend" class="legend"></div>
+    </section>
+
+    <aside id="panel" class="panel" aria-live="polite">
+      <p class="placeholder">Select a concept on the graph to see its definition, related concepts, and resources.</p>
+    </aside>
+  </main>
+
+  <footer class="site-footer">
+    <p>Proof of concept. Definitions are hand-written and may be simplified. Resource links are external.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

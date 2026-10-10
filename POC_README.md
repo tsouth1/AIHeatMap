@@ -1,0 +1,87 @@
+# AI Ecosystem Navigator (POC)
+
+An interactive graph of AI concepts. Click a node to read its definition, see related concepts, and open learning resources. This is a proof of concept: a static page with no backend, database, or login.
+
+See `POC_PLAN.md` for scope and goals. The original product requirements are in `README.md`.
+
+## Run locally
+
+The page loads `data/concepts.json` with `fetch`, so it must be served over HTTP. Opening `index.html` directly will not work in most browsers.
+
+```bash
+cd AIHeatMap
+python -m http.server 8000
+```
+
+Then open http://localhost:8000 in a browser.
+
+## Deploy with GitHub Pages (free)
+
+1. Push this repo to GitHub.
+2. In the repo, go to **Settings → Pages**.
+3. Under **Build and deployment**, choose **Deploy from a branch**, select `main`, and folder `/ (root)`.
+4. Save. The site appears at `https://<your-username>.github.io/AIHeatMap/` after a minute or two.
+
+## Using the page
+
+- **Click** a node to open its panel.
+- **Click** a related concept in the panel to move to it.
+- **Search** by name or alias (for example `RAG`, `Model Context Protocol`, `rag`). Arrow keys and Enter select a result.
+- **Drag** nodes to rearrange them. **Scroll** or pinch to zoom, and drag empty space to pan.
+- **Reset view** returns to the full graph.
+
+## Adding or editing a concept
+
+All content lives in `data/concepts.json`. Each concept is one object in the `concepts` array:
+
+```json
+{
+  "id": "rag",
+  "name": "RAG",
+  "aliases": ["Retrieval-Augmented Generation"],
+  "category": "technique",
+  "definition": "Two to four sentences written for a beginner.",
+  "related": [
+    { "id": "embedding", "type": "depends_on" }
+  ],
+  "resources": [
+    { "title": "Readable title", "type": "paper", "url": "https://example.com" }
+  ]
+}
+```
+
+Rules:
+
+- `id` must be unique and lowercase with hyphens. Other concepts refer to it by this id.
+- Every `related.id` must match an existing concept `id`. Unknown ids are skipped and logged to the browser console.
+- `related.type` must be one of: `related_to`, `depends_on`, `part_of`, `alternative_to`, `uses`, `extends`.
+- `category` must be one of: `field`, `concept`, `architecture`, `technique`, `model`, `protocol`, `application`. Each has a colour in the legend. Unknown categories display grey.
+- Check each resource link by hand before committing.
+
+## Content notes
+
+- Definitions are hand-written and simplified for beginners. Have a non-expert read them before testing.
+- Resource links were written without live verification and have **not yet been checked**. Open each one and fix or remove any that are broken or do not match the title before the first user test.
+- Only link to sources you are allowed to link to. Do not copy text or images from them.
+
+## Project structure
+
+```
+index.html          Page layout
+style.css           Styling and responsive layout
+app.js              Graph, selection, side panel, search
+data/concepts.json  All concepts, relationships, and resources
+POC_PLAN.md         POC scope, steps, and acceptance criteria
+POC_README.md       This file
+```
+
+## Dependencies
+
+- [D3.js v7](https://d3js.org), loaded from a CDN in `index.html`. No install step.
+
+## Known limits of the POC
+
+- Concept data is edited by hand. There is no admin tool.
+- Search matches names and aliases only. It does not search definitions.
+- No saved progress, accounts, or learning paths.
+- Tested in current desktop browsers. Mobile layout is responsive but not extensively tested.
