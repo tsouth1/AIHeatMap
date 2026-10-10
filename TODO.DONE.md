@@ -5,6 +5,7 @@ Completed items moved from [TODO.md](TODO.md), oldest first.
 ## Index
 
 1. [x] [Fix six resource links in `concepts.json`](#1-fix-six-resource-links-in-conceptsjson)
+2. [x] [Check the OpenAI Tokenizer link in a browser](#2-check-the-openai-tokenizer-link-in-a-browser)
 
 ---
 
@@ -24,3 +25,11 @@ Found by the link check on 2026-10-10. Every suggested replacement returned 200.
 | `guardrails` | AI safety (overview): Wikipedia | Covers the whole field, not guardrails | https://github.com/NVIDIA-NeMo/Guardrails |
 
 Each resource's `title` was updated to match its new page. The JSON parses and every `related.id` resolves.
+
+## 2. Check the OpenAI Tokenizer link in a browser
+
+**Done 2026-10-10.** Kept the link; no change to `concepts.json`.
+
+`token` → https://platform.openai.com/tokenizer returns 200 but renders with JavaScript, so the automated link check only saw "OpenAI Platform".
+
+The user opened the page in their own browser and confirmed the tokenizer tool is there without logging in. Headless browsers get a Cloudflare "Just a moment..." check instead, so automated link checks will always flag this URL; check it by hand. A fallback that automated tools can load is Tiktokenizer, https://tiktokenizer.vercel.app/ (token counts, coloured tokens and token IDs; no character count).
