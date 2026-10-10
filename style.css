@@ -238,6 +238,95 @@ button:hover, button:focus-visible {
   color: var(--accent);
 }
 
+.panel .tags {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin-left: 0.4rem;
+  vertical-align: middle;
+}
+
+.panel .tag {
+  font-size: 0.72rem;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0 0.45rem;
+  line-height: 1.5;
+}
+
+.panel .filtered-note {
+  color: var(--muted);
+  font-size: 0.88rem;
+  list-style: none;
+  margin-left: -1.1rem;
+}
+
+.panel .filtered-note button {
+  padding: 0.2rem 0.5rem;
+  font-size: 0.85rem;
+}
+
+.filters {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 1rem;
+  background: var(--bg);
+}
+
+.filters summary {
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.filters .filter-count {
+  color: var(--accent);
+  font-weight: 400;
+}
+
+.filters .filter-help {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin: 0.4rem 0 0.25rem;
+}
+
+.filters fieldset {
+  border: none;
+  margin: 0.5rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem 0.9rem;
+}
+
+.filters legend {
+  width: 100%;
+  padding: 0;
+  margin-bottom: 0.15rem;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+
+.filters label {
+  font-size: 0.9rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.filters input[type="checkbox"] {
+  accent-color: var(--accent);
+}
+
+#filter-reset {
+  margin-top: 0.75rem;
+  padding: 0.3rem 0.7rem;
+  font-size: 0.85rem;
+}
+
 .site-footer {
   padding: 0.75rem 1.25rem;
   border-top: 1px solid var(--border);

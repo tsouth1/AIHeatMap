@@ -37,6 +37,11 @@ let byId = new Map();
 let neighbors = new Map();
 let selectedId = null;
 
+let tagGroups = [];
+let tagById = new Map(); // tag id -> { label, group }
+let hiddenTags = new Set();
+const HIDDEN_TAGS_KEY = "aiheatmap.hiddenTags";
+
 let svg, gRoot, linkSel, nodeSel, simulation, zoomBehavior;
 let width = 0;
 let height = 0;
@@ -60,6 +65,10 @@ async function init() {
   concepts = json.concepts;
   byId = new Map(concepts.map((c) => [c.id, c]));
   buildNeighbors();
+
+  tagGroups = json.tagGroups || [];
+  buildTagIndex();
+  buildFilters();
 
   buildLegend();
   buildGraph();
@@ -107,6 +116,89 @@ function buildLinkData() {
     }
   }
   return out;
+}
+
+function buildTagIndex() {
+  for (const group of tagGroups) {
+    for (const tag of group.tags) tagById.set(tag.id, { label: tag.label, group: group.id });
+  }
+  for (const c of concepts) {
+    for (const res of c.resources || []) {
+      for (const t of res.tags || []) {
+        if (!tagById.has(t)) console.warn(`Resource "${res.title}" has unknown tag "${t}"`);
+      }
+    }
+  }
+}
+
+// ---- Resource filters ------------------------------------------------------
+
+function loadHiddenTags() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(HIDDEN_TAGS_KEY) || "[]");
+    return new Set(saved.filter((t) => tagById.has(t)));
+  } catch {
+    return new Set();
+  }
+}
+
+function saveHiddenTags() {
+  try {
+    localStorage.setItem(HIDDEN_TAGS_KEY, JSON.stringify([...hiddenTags]));
+  } catch {
+    // Storage unavailable (private window, blocked). Filters still work for this visit.
+  }
+}
+
+// A resource is hidden if any of its tags is unticked.
+function isResourceVisible(res) {
+  return !(res.tags || []).some((t) => hiddenTags.has(t));
+}
+
+function buildFilters() {
+  hiddenTags = loadHiddenTags();
+  const container = document.getElementById("filter-groups");
+
+  for (const group of tagGroups) {
+    const fieldset = document.createElement("fieldset");
+    fieldset.appendChild(el("legend", group.label));
+    for (const tag of group.tags) {
+      const label = document.createElement("label");
+      const box = document.createElement("input");
+      box.type = "checkbox";
+      box.value = tag.id;
+      box.checked = !hiddenTags.has(tag.id);
+      box.addEventListener("change", () => {
+        if (box.checked) hiddenTags.delete(tag.id);
+        else hiddenTags.add(tag.id);
+        onFiltersChanged();
+      });
+      label.appendChild(box);
+      label.appendChild(document.createTextNode(" " + tag.label));
+      fieldset.appendChild(label);
+    }
+    container.appendChild(fieldset);
+  }
+
+  document.getElementById("filter-reset").addEventListener("click", () => {
+    hiddenTags.clear();
+    for (const box of container.querySelectorAll("input[type=checkbox]")) box.checked = true;
+    onFiltersChanged();
+  });
+
+  updateFilterCount();
+}
+
+function onFiltersChanged() {
+  saveHiddenTags();
+  updateFilterCount();
+  if (selectedId) renderPanel(byId.get(selectedId));
+}
+
+function updateFilterCount() {
+  document.getElementById("filter-count").textContent = hiddenTags.size
+    ? `(${hiddenTags.size} hidden)`
+    : "";
 }
 
 // ---- Legend ----------------------------------------------------------------
@@ -325,18 +417,40 @@ function renderPanel(concept) {
   // Resources
   panel.appendChild(el("h3", "Learning resources"));
   const resList = document.createElement("ul");
-  for (const res of concept.resources || []) {
+  const allResources = concept.resources || [];
+  const visible = allResources.filter(isResourceVisible);
+  for (const res of visible) {
     const li = document.createElement("li");
     const a = el("a", res.title, "resource");
     a.href = res.url;
     a.target = "_blank";
     a.rel = "noopener noreferrer";
     li.appendChild(a);
-    li.appendChild(document.createTextNode(" "));
-    li.appendChild(el("span", "(" + res.type + ")", "rel-type"));
+    const tags = el("span", null, "tags");
+    for (const t of res.tags || []) {
+      tags.appendChild(el("span", tagById.get(t)?.label || t, "tag"));
+    }
+    li.appendChild(tags);
     resList.appendChild(li);
   }
-  if (!resList.children.length) resList.appendChild(el("li", "No resources yet."));
+  if (!allResources.length) {
+    resList.appendChild(el("li", "No resources yet."));
+  } else if (!visible.length) {
+    const li = el("li", null, "filtered-note");
+    const n = allResources.length;
+    li.appendChild(document.createTextNode(`Your filters hide ${n === 1 ? "this concept's only resource" : `all ${n} resources`}. `));
+    const show = el("button", "Change filters", "related");
+    show.type = "button";
+    show.addEventListener("click", () => {
+      const filters = document.getElementById("filters");
+      filters.open = true;
+      filters.scrollIntoView({ block: "nearest" });
+    });
+    li.appendChild(show);
+    resList.appendChild(li);
+  } else if (visible.length < allResources.length) {
+    resList.appendChild(el("li", `${allResources.length - visible.length} more hidden by filters.`, "filtered-note"));
+  }
   panel.appendChild(resList);
 }
 

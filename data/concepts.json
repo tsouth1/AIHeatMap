@@ -1,4 +1,41 @@
 {
+  "tagGroups": [
+    {
+      "id": "format",
+      "label": "Format",
+      "tags": [
+        { "id": "video", "label": "Video" },
+        { "id": "article", "label": "Article" },
+        { "id": "paper", "label": "Paper" },
+        { "id": "course", "label": "Course" },
+        { "id": "book", "label": "Book" },
+        { "id": "docs", "label": "Docs" },
+        { "id": "tool", "label": "Tool" },
+        { "id": "wiki", "label": "Wiki" }
+      ]
+    },
+    {
+      "id": "source",
+      "label": "Source",
+      "tags": [
+        { "id": "social-media", "label": "Social media" },
+        { "id": "education", "label": "Education" },
+        { "id": "peer-reviewed", "label": "Peer reviewed" },
+        { "id": "vendor", "label": "Vendor" },
+        { "id": "community", "label": "Community" }
+      ]
+    },
+    {
+      "id": "cost",
+      "label": "Cost and intent",
+      "tags": [
+        { "id": "free", "label": "Free" },
+        { "id": "promotional", "label": "Promotional" },
+        { "id": "paid", "label": "Paid" },
+        { "id": "subscription", "label": "Subscription" }
+      ]
+    }
+  ],
   "concepts": [
     {
       "id": "machine-learning",
@@ -13,7 +50,7 @@
         { "id": "deep-learning", "type": "related_to" }
       ],
       "resources": [
-        { "title": "Machine Learning Crash Course (Google)", "type": "course", "url": "https://developers.google.com/machine-learning/crash-course" }
+        { "title": "Machine Learning Crash Course (Google)", "tags": ["course", "vendor", "free"], "url": "https://developers.google.com/machine-learning/crash-course" }
       ]
     },
     {
@@ -27,7 +64,7 @@
         { "id": "neural-network", "type": "uses" }
       ],
       "resources": [
-        { "title": "Deep Learning (book, free online)", "type": "book", "url": "https://www.deeplearningbook.org" }
+        { "title": "Deep Learning (book, free online)", "tags": ["book", "education", "free"], "url": "https://www.deeplearningbook.org" }
       ]
     },
     {
@@ -42,7 +79,7 @@
         { "id": "transformer", "type": "related_to" }
       ],
       "resources": [
-        { "title": "Natural language processing (overview)", "type": "wiki", "url": "https://en.wikipedia.org/wiki/Natural_language_processing" }
+        { "title": "Natural language processing (overview)", "tags": ["wiki", "community", "free"], "url": "https://en.wikipedia.org/wiki/Natural_language_processing" }
       ]
     },
     {
@@ -57,7 +94,7 @@
         { "id": "multimodal-model", "type": "related_to" }
       ],
       "resources": [
-        { "title": "Computer vision (overview)", "type": "wiki", "url": "https://en.wikipedia.org/wiki/Computer_vision" }
+        { "title": "Computer vision (overview)", "tags": ["wiki", "community", "free"], "url": "https://en.wikipedia.org/wiki/Computer_vision" }
       ]
     },
     {
@@ -72,7 +109,7 @@
         { "id": "training", "type": "related_to" }
       ],
       "resources": [
-        { "title": "But what is a neural network? (3Blue1Brown video)", "type": "video", "url": "https://www.youtube.com/watch?v=aircAruvnKk" }
+        { "title": "But what is a neural network? (3Blue1Brown video)", "tags": ["video", "social-media", "free"], "url": "https://www.youtube.com/watch?v=aircAruvnKk" }
       ]
     },
     {
@@ -87,7 +124,7 @@
         { "id": "llm", "type": "related_to" }
       ],
       "resources": [
-        { "title": "Attention Is All You Need (original paper)", "type": "paper", "url": "https://arxiv.org/abs/1706.03762" }
+        { "title": "Attention Is All You Need (original paper)", "tags": ["paper", "peer-reviewed", "free"], "url": "https://arxiv.org/abs/1706.03762" }
       ]
     },
     {
@@ -100,7 +137,7 @@
         { "id": "transformer", "type": "part_of" }
       ],
       "resources": [
-        { "title": "The Illustrated Transformer (article)", "type": "article", "url": "https://jalammar.github.io/illustrated-transformer/" }
+        { "title": "The Illustrated Transformer (article)", "tags": ["article", "community", "free"], "url": "https://jalammar.github.io/illustrated-transformer/" }
       ]
     },
     {
@@ -115,7 +152,7 @@
         { "id": "computer-vision", "type": "related_to" }
       ],
       "resources": [
-        { "title": "Denoising Diffusion Probabilistic Models (paper)", "type": "paper", "url": "https://arxiv.org/abs/2006.11239" }
+        { "title": "Denoising Diffusion Probabilistic Models (paper)", "tags": ["paper", "peer-reviewed", "free"], "url": "https://arxiv.org/abs/2006.11239" }
       ]
     },
     {
@@ -132,7 +169,7 @@
         { "id": "open-source-model", "type": "related_to" }
       ],
       "resources": [
-        { "title": "Large language model (overview)", "type": "wiki", "url": "https://en.wikipedia.org/wiki/Large_language_model" }
+        { "title": "Large language model (overview)", "tags": ["wiki", "community", "free"], "url": "https://en.wikipedia.org/wiki/Large_language_model" }
       ]
     },
     {
@@ -147,7 +184,7 @@
         { "id": "diffusion-model", "type": "related_to" }
       ],
       "resources": [
-        { "title": "Multimodal learning (overview)", "type": "wiki", "url": "https://en.wikipedia.org/wiki/Multimodal_learning" }
+        { "title": "Multimodal learning (overview)", "tags": ["wiki", "community", "free"], "url": "https://en.wikipedia.org/wiki/Multimodal_learning" }
       ]
     },
     {
@@ -161,7 +198,7 @@
         { "id": "benchmark", "type": "related_to" }
       ],
       "resources": [
-        { "title": "Hugging Face model hub", "type": "docs", "url": "https://huggingface.co/models" }
+        { "title": "Hugging Face model hub", "tags": ["tool", "vendor", "free"], "url": "https://huggingface.co/models" }
       ]
     },
     {
@@ -176,7 +213,7 @@
         { "id": "context-window", "type": "related_to" }
       ],
       "resources": [
-        { "title": "OpenAI Tokenizer (interactive tool)", "type": "tool", "url": "https://platform.openai.com/tokenizer" }
+        { "title": "OpenAI Tokenizer (interactive tool)", "tags": ["tool", "vendor", "free"], "url": "https://platform.openai.com/tokenizer" }
       ]
     },
     {
@@ -190,7 +227,7 @@
         { "id": "llm", "type": "part_of" }
       ],
       "resources": [
-        { "title": "Context windows (Claude documentation)", "type": "docs", "url": "https://platform.claude.com/docs/en/build-with-claude/context-windows" }
+        { "title": "Context windows (Claude documentation)", "tags": ["docs", "vendor", "free"], "url": "https://platform.claude.com/docs/en/build-with-claude/context-windows" }
       ]
     },
     {
@@ -205,7 +242,7 @@
         { "id": "rag", "type": "related_to" }
       ],
       "resources": [
-        { "title": "Embeddings (Google ML Crash Course)", "type": "course", "url": "https://developers.google.com/machine-learning/crash-course/embeddings" }
+        { "title": "Embeddings (Google ML Crash Course)", "tags": ["course", "vendor", "free"], "url": "https://developers.google.com/machine-learning/crash-course/embeddings" }
       ]
     },
     {
@@ -219,7 +256,7 @@
         { "id": "rag", "type": "part_of" }
       ],
       "resources": [
-        { "title": "Vector database (overview)", "type": "wiki", "url": "https://en.wikipedia.org/wiki/Vector_database" }
+        { "title": "Vector database (overview)", "tags": ["wiki", "community", "free"], "url": "https://en.wikipedia.org/wiki/Vector_database" }
       ]
     },
     {
@@ -235,7 +272,7 @@
         { "id": "hallucination", "type": "related_to" }
       ],
       "resources": [
-        { "title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP (paper)", "type": "paper", "url": "https://arxiv.org/abs/2005.11401" }
+        { "title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP (paper)", "tags": ["paper", "peer-reviewed", "free"], "url": "https://arxiv.org/abs/2005.11401" }
       ]
     },
     {
@@ -250,7 +287,7 @@
         { "id": "fine-tuning", "type": "related_to" }
       ],
       "resources": [
-        { "title": "Linear regression: Loss (Google ML Crash Course)", "type": "course", "url": "https://developers.google.com/machine-learning/crash-course/linear-regression/loss" }
+        { "title": "Linear regression: Loss (Google ML Crash Course)", "tags": ["course", "vendor", "free"], "url": "https://developers.google.com/machine-learning/crash-course/linear-regression/loss" }
       ]
     },
     {
@@ -264,7 +301,7 @@
         { "id": "llm", "type": "uses" }
       ],
       "resources": [
-        { "title": "Inference (Google ML Glossary)", "type": "docs", "url": "https://developers.google.com/machine-learning/glossary#inference" }
+        { "title": "Inference (Google ML Glossary)", "tags": ["docs", "vendor", "free"], "url": "https://developers.google.com/machine-learning/glossary#inference" }
       ]
     },
     {
@@ -278,7 +315,7 @@
         { "id": "training", "type": "uses" }
       ],
       "resources": [
-        { "title": "Supervised Learning (Google ML intro)", "type": "course", "url": "https://developers.google.com/machine-learning/intro-to-ml/supervised" }
+        { "title": "Supervised Learning (Google ML intro)", "tags": ["course", "vendor", "free"], "url": "https://developers.google.com/machine-learning/intro-to-ml/supervised" }
       ]
     },
     {
@@ -292,7 +329,7 @@
         { "id": "llm", "type": "related_to" }
       ],
       "resources": [
-        { "title": "Reinforcement Learning: An Introduction (free book)", "type": "book", "url": "http://incompleteideas.net/book/the-book.html" }
+        { "title": "Reinforcement Learning: An Introduction (free book)", "tags": ["book", "education", "free"], "url": "http://incompleteideas.net/book/the-book.html" }
       ]
     },
     {
@@ -307,7 +344,7 @@
         { "id": "llm", "type": "uses" }
       ],
       "resources": [
-        { "title": "Fine-tuning guide (Hugging Face)", "type": "docs", "url": "https://huggingface.co/docs/transformers/training" }
+        { "title": "Fine-tuning guide (Hugging Face)", "tags": ["docs", "vendor", "free"], "url": "https://huggingface.co/docs/transformers/training" }
       ]
     },
     {
@@ -321,7 +358,7 @@
         { "id": "llm", "type": "uses" }
       ],
       "resources": [
-        { "title": "LoRA: Low-Rank Adaptation of Large Language Models (paper)", "type": "paper", "url": "https://arxiv.org/abs/2106.09685" }
+        { "title": "LoRA: Low-Rank Adaptation of Large Language Models (paper)", "tags": ["paper", "peer-reviewed", "free"], "url": "https://arxiv.org/abs/2106.09685" }
       ]
     },
     {
@@ -336,7 +373,7 @@
         { "id": "guardrails", "type": "related_to" }
       ],
       "resources": [
-        { "title": "Prompting Guide", "type": "docs", "url": "https://www.promptingguide.ai" }
+        { "title": "Prompting Guide", "tags": ["docs", "community", "free", "promotional"], "url": "https://www.promptingguide.ai" }
       ]
     },
     {
@@ -351,7 +388,7 @@
         { "id": "guardrails", "type": "related_to" }
       ],
       "resources": [
-        { "title": "Survey of Hallucination in Natural Language Generation (paper)", "type": "paper", "url": "https://arxiv.org/abs/2202.03629" }
+        { "title": "Survey of Hallucination in Natural Language Generation (paper)", "tags": ["paper", "peer-reviewed", "free"], "url": "https://arxiv.org/abs/2202.03629" }
       ]
     },
     {
@@ -366,7 +403,7 @@
         { "id": "prompt-engineering", "type": "related_to" }
       ],
       "resources": [
-        { "title": "NeMo Guardrails (open-source toolkit)", "type": "tool", "url": "https://github.com/NVIDIA-NeMo/Guardrails" }
+        { "title": "NeMo Guardrails (open-source toolkit)", "tags": ["tool", "vendor", "free"], "url": "https://github.com/NVIDIA-NeMo/Guardrails" }
       ]
     },
     {
@@ -381,7 +418,7 @@
         { "id": "machine-learning", "type": "related_to" }
       ],
       "resources": [
-        { "title": "Holistic Evaluation of Language Models (HELM)", "type": "docs", "url": "https://crfm.stanford.edu/helm/" }
+        { "title": "Holistic Evaluation of Language Models (HELM)", "tags": ["docs", "education", "free"], "url": "https://crfm.stanford.edu/helm/" }
       ]
     },
     {
@@ -397,7 +434,7 @@
         { "id": "guardrails", "type": "related_to" }
       ],
       "resources": [
-        { "title": "Intelligent agent (overview)", "type": "wiki", "url": "https://en.wikipedia.org/wiki/Intelligent_agent" }
+        { "title": "Intelligent agent (overview)", "tags": ["wiki", "community", "free"], "url": "https://en.wikipedia.org/wiki/Intelligent_agent" }
       ]
     },
     {
@@ -412,7 +449,7 @@
         { "id": "mcp", "type": "related_to" }
       ],
       "resources": [
-        { "title": "Tool use with Claude (documentation)", "type": "docs", "url": "https://docs.anthropic.com/en/docs/build-with-claude/tool-use/overview" }
+        { "title": "Tool use with Claude (documentation)", "tags": ["docs", "vendor", "free"], "url": "https://docs.anthropic.com/en/docs/build-with-claude/tool-use/overview" }
       ]
     },
     {
@@ -426,7 +463,7 @@
         { "id": "ai-agent", "type": "related_to" }
       ],
       "resources": [
-        { "title": "Model Context Protocol (official site)", "type": "docs", "url": "https://modelcontextprotocol.io" }
+        { "title": "Model Context Protocol (official site)", "tags": ["docs", "community", "free"], "url": "https://modelcontextprotocol.io" }
       ]
     },
     {
@@ -441,7 +478,7 @@
         { "id": "prompt-engineering", "type": "related_to" }
       ],
       "resources": [
-        { "title": "Chatbot (overview)", "type": "wiki", "url": "https://en.wikipedia.org/wiki/Chatbot" }
+        { "title": "Chatbot (overview)", "tags": ["wiki", "community", "free"], "url": "https://en.wikipedia.org/wiki/Chatbot" }
       ]
     }
   ]

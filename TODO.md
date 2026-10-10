@@ -12,7 +12,6 @@ Scope and acceptance criteria are in `POC_PLAN.md`.
 4. [ ] [Run the self-check against the acceptance criteria](#4-run-the-self-check-against-the-acceptance-criteria)
 5. [ ] [Run the five-person test](#5-run-the-five-person-test)
 6. [ ] [Answer the open decisions](#6-answer-the-open-decisions)
-7. [ ] [Tag resources and add a resource filter](#7-tag-resources-and-add-a-resource-filter)
 
 Completed items are in [TODO.DONE.md](TODO.DONE.md).
 
@@ -44,25 +43,3 @@ From section 9 of `POC_PLAN.md`:
 
 - Primary persona (recommended: the curious beginner).
 - Who writes and reviews the content.
-
-## 7. Tag resources and add a resource filter
-
-Give each resource in `data/concepts.json` a set of tags, then let users filter resources by tag in the UI.
-
-**Tags.** A resource can carry several tags, from different groups:
-
-- **Format:** video, article, paper, course, book, docs, tool, wiki. This replaces the current single `type` field.
-- **Source:** social media (YouTube, TikTok and similar), education (for example an accredited college or university), peer reviewed, vendor, community.
-- **Cost and intent:** free and informational, promotional (for example free downloads used to sell something), paid, subscription.
-
-Examples:
-
-- A YouTube video: video, social media, plus a cost tag.
-- A university course page: course, education, and possibly promotional.
-- An arXiv paper: paper, free. Add peer reviewed only if it was published in a reviewed venue, because arXiv itself is not peer reviewed.
-
-**Data.** Add a `tags` array to each resource, and list the allowed tags with their groups in one place so the UI can build the filter from them. Tag all 30 existing resources by hand.
-
-**UI.** Add a filter box with a checkbox per tag, grouped as above. Unchecking a tag hides resources with that tag in the side panel. Show a note when a filter hides every resource for a concept. Remember the choices in the browser if that's easy.
-
-**Decision:** a resource is hidden if any of its tags is unchecked, even when its other tags are checked. For example, unchecking "paid" hides every paid resource.

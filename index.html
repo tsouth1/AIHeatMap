@@ -23,8 +23,16 @@
       <div id="legend" class="legend"></div>
     </section>
 
-    <aside id="panel" class="panel" aria-live="polite">
-      <p class="placeholder">Select a concept on the graph to see its definition, related concepts, and resources.</p>
+    <aside class="panel">
+      <details id="filters" class="filters">
+        <summary>Filter resources <span id="filter-count" class="filter-count"></span></summary>
+        <p class="filter-help">Untick a tag to hide every resource that has it.</p>
+        <div id="filter-groups"></div>
+        <button id="filter-reset" type="button">Show all</button>
+      </details>
+      <div id="panel" aria-live="polite">
+        <p class="placeholder">Select a concept on the graph to see its definition, related concepts, and resources.</p>
+      </div>
     </aside>
   </main>
 

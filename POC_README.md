@@ -29,6 +29,7 @@ Then open http://localhost:8000 in a browser.
 - **Search** by name or alias (for example `RAG`, `Model Context Protocol`, `rag`). Arrow keys and Enter select a result.
 - **Drag** nodes to rearrange them. **Scroll** or pinch to zoom, and drag empty space to pan.
 - **Reset view** returns to the full graph.
+- **Filter resources** (top of the side panel) has a checkbox per tag. Untick a tag to hide every resource that has it, even if its other tags are ticked. Your choices are remembered in this browser. **Show all** clears them.
 
 ## Adding or editing a concept
 
@@ -45,7 +46,7 @@ All content lives in `data/concepts.json`. Each concept is one object in the `co
     { "id": "embedding", "type": "depends_on" }
   ],
   "resources": [
-    { "title": "Readable title", "type": "paper", "url": "https://example.com" }
+    { "title": "Readable title", "tags": ["paper", "peer-reviewed", "free"], "url": "https://example.com" }
   ]
 }
 ```
@@ -56,6 +57,12 @@ Rules:
 - Every `related.id` must match an existing concept `id`. Unknown ids are skipped and logged to the browser console.
 - `related.type` must be one of: `related_to`, `depends_on`, `part_of`, `alternative_to`, `uses`, `extends`.
 - `category` must be one of: `field`, `concept`, `architecture`, `technique`, `model`, `protocol`, `application`. Each has a colour in the legend. Unknown categories display grey.
+- Give each resource one **format** tag, one **source** tag and at least one **cost and intent** tag. The allowed tags are listed in `tagGroups` at the top of `concepts.json`:
+  - Format: `video`, `article`, `paper`, `course`, `book`, `docs`, `tool`, `wiki`.
+  - Source: `social-media` (YouTube, TikTok and similar), `education` (universities and colleges), `peer-reviewed`, `vendor`, `community`.
+  - Cost and intent: `free`, `promotional` (free content used to sell something), `paid`, `subscription`.
+- Tag an arXiv paper `peer-reviewed` only if it was published in a reviewed venue. arXiv itself is not peer reviewed.
+- To add a tag, add it to the right group in `tagGroups`. The filter box picks it up automatically. Unknown tags are logged to the browser console.
 - Check each resource link by hand before committing.
 
 ## Content notes
