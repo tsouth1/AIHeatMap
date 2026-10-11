@@ -12,6 +12,7 @@ Scope and acceptance criteria are in `POC_PLAN.md`.
 4. [ ] [Run the self-check against the acceptance criteria](#4-run-the-self-check-against-the-acceptance-criteria)
 5. [ ] [Run the five-person test](#5-run-the-five-person-test)
 6. [ ] [Answer the open decisions](#6-answer-the-open-decisions)
+7. [ ] [Re-check the Leading LLMs chart data](#7-re-check-the-leading-llms-chart-data)
 
 Completed items are in [TODO.DONE.md](TODO.DONE.md).
 
@@ -43,3 +44,14 @@ From section 9 of `POC_PLAN.md`:
 
 - Primary persona (recommended: the curious beginner).
 - Who writes and reviews the content.
+
+## 7. Re-check the Leading LLMs chart data
+
+`data/llms.json` lists the latest version of 11 model families as of 2026-10-11. Model versions change every few weeks, so re-check each row against the developer's own site just before the five-person test (item 5), then update `asOf`. Steps are in "Updating the LLM chart" in `POC_README.md`.
+
+Rows to look at first:
+
+- **Claude:** the row lists Opus 5.5, Sonnet 5.5 and Haiku 5.5. Check whether Fable 5.1 should be listed too.
+- **Mistral:** open weights are marked "Planned (late October 2026)". Update once released.
+- **Gemini 4 Argon:** marked limited access. Update if it becomes generally available.
+
