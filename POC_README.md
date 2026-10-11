@@ -30,6 +30,7 @@ Then open http://localhost:8000 in a browser.
 - **Drag** nodes to rearrange them. **Scroll** or pinch to zoom, and drag empty space to pan.
 - **Reset view** returns to the full graph.
 - **Leading LLMs** (dashed ring, linked to Large Language Model) has an **Open the LLM chart** button. It opens a table comparing current model families. Searching a family name such as `Gemini` or `DeepSeek` finds this node.
+- **Circle size** (top left of the graph) sizes each circle by its keyword's estimated monthly searches, keyword difficulty or cost per click, or makes them all the same size. The side panel shows all three under **Search interest**.
 - **Filter resources** (top of the side panel) has a checkbox per tag. Untick a tag to hide every resource that has it, even if its other tags are ticked. Your choices are remembered in this browser. **Show all** clears them.
 
 ## Adding or editing a concept
@@ -66,6 +67,17 @@ Rules:
 - To add a tag, add it to the right group in `tagGroups`. The filter box picks it up automatically. Unknown tags are logged to the browser console.
 - Check each resource link by hand before committing.
 
+## Keyword metrics
+
+Circle sizes and the **Search interest** panel section read `data/metrics.json`. Each entry, keyed by concept `id`, has:
+
+- `keyword`: the search phrase the numbers describe.
+- `avgMonthlySearches`: `low` and `high`, in the same ranges Google Keyword Planner reports (100 to 1K, 1K to 10K, and so on).
+- `keywordDifficulty`: 0 to 100, as in Ahrefs and Semrush. Higher means harder to rank for.
+- `cpc`: `low` and `high` top-of-page bids in US dollars, as in Google Ads.
+
+**The current numbers are rough hand estimates, not live data.** The page labels them "Estimated" while `estimated` is `true`. To use real numbers, export them from Keyword Planner (needs a Google Ads account), Ahrefs or Semrush (paid), paste them in, update `asOf`, and set `estimated` to `false`. A concept with no entry gets a medium-sized circle.
+
 ## Updating the LLM chart
 
 The chart reads `data/llms.json`. Each entry in `models` has `family`, `developer`, `latest`, `released`, `openWeights`, `inputs`, `description`, `uses` and `url`. When you change it, update `asOf` and keep `sources` pointing at where the facts came from. Model versions change every few weeks, so re-check the chart before each user test.
@@ -86,6 +98,7 @@ style.css           Styling and responsive layout
 app.js              Graph, selection, side panel, search
 data/concepts.json  All concepts, relationships, and resources
 data/llms.json      Leading LLMs chart
+data/metrics.json   Keyword metrics used for circle size
 POC_PLAN.md         POC scope, steps, and acceptance criteria
 POC_README.md       This file
 ```

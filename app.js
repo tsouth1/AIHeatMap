@@ -42,6 +42,13 @@ let tagById = new Map(); // tag id -> { label, group }
 let hiddenTags = new Set();
 const HIDDEN_TAGS_KEY = "aiheatmap.hiddenTags";
 
+let metricsData = null; // contents of data/metrics.json, or null if it failed to load
+let sizeBy = "volume";
+const SIZE_BY_KEY = "aiheatmap.sizeBy";
+const MIN_R = 6;
+const MAX_R = 24;
+const DEFAULT_R = 10;
+
 let svg, gRoot, linkSel, nodeSel, simulation, zoomBehavior;
 let width = 0;
 let height = 0;
@@ -70,9 +77,19 @@ async function init() {
   buildTagIndex();
   buildFilters();
 
+  metricsData = await loadMetrics();
+  try {
+    const saved = localStorage.getItem(SIZE_BY_KEY);
+    if (saved && (saved === "none" || SIZE_VALUE[saved])) sizeBy = saved;
+  } catch {
+    // Storage unavailable; use the default.
+  }
+  buildRadiusScale();
+
   buildLegend();
   buildGraph();
   bindSearch();
+  bindSizeControl();
 
   resetBtn.addEventListener("click", () => {
     clearSelection();
@@ -201,6 +218,118 @@ function updateFilterCount() {
     : "";
 }
 
+// ---- Keyword metrics and node size -----------------------------------------
+
+async function loadMetrics() {
+  try {
+    const response = await fetch("data/metrics.json");
+    if (!response.ok) throw new Error("HTTP " + response.status);
+    return await response.json();
+  } catch (err) {
+    console.warn("Keyword metrics not loaded; all circles use the same size.", err);
+    return null;
+  }
+}
+
+function metricsFor(id) {
+  return metricsData?.metrics?.[id] || null;
+}
+
+// The raw number each "size by" option uses. Ranges use their geometric middle,
+// since Keyword Planner ranges span a factor of ten.
+const SIZE_VALUE = {
+  volume: (m) => Math.sqrt(m.avgMonthlySearches.low * m.avgMonthlySearches.high),
+  kd: (m) => m.keywordDifficulty,
+  cpc: (m) => (m.cpc.low + m.cpc.high) / 2,
+};
+
+let radiusScale = null;
+
+function buildRadiusScale() {
+  radiusScale = null;
+  const valueOf = SIZE_VALUE[sizeBy];
+  if (!valueOf || !metricsData) return;
+  const values = concepts.map((c) => metricsFor(c.id)).filter(Boolean).map(valueOf);
+  if (!values.length) return;
+  // Search volume spans several orders of magnitude, so use a log scale for it.
+  radiusScale = (sizeBy === "volume" ? d3.scaleLog() : d3.scaleSqrt())
+    .domain(d3.extent(values))
+    .range([MIN_R, MAX_R])
+    .clamp(true);
+}
+
+function nodeRadius(id) {
+  const m = metricsFor(id);
+  if (!radiusScale || !m) return DEFAULT_R;
+  return radiusScale(SIZE_VALUE[sizeBy](m));
+}
+
+function bindSizeControl() {
+  const select = document.getElementById("size-by");
+  const note = document.querySelector(".size-control .size-note");
+  if (!metricsData) {
+    select.value = "none";
+    select.disabled = true;
+    note.textContent = "No data";
+    return;
+  }
+  note.hidden = !metricsData.estimated;
+  note.title = metricsData.method || "";
+  select.value = sizeBy;
+  select.addEventListener("change", () => {
+    sizeBy = select.value;
+    try {
+      localStorage.setItem(SIZE_BY_KEY, sizeBy);
+    } catch {
+      // Storage unavailable; the choice lasts for this visit only.
+    }
+    applySizes();
+  });
+}
+
+function applySizes() {
+  buildRadiusScale();
+  nodeSel.select("circle").transition().duration(400).attr("r", (d) => nodeRadius(d.id));
+  nodeSel.select("text").transition().duration(400).attr("x", (d) => nodeRadius(d.id) + 4);
+  simulation.force("collide", d3.forceCollide((d) => nodeRadius(d.id) + 16));
+  simulation.alpha(0.3).restart();
+}
+
+const compactNumber = new Intl.NumberFormat("en", { notation: "compact" });
+
+function difficultyLabel(kd) {
+  if (kd < 30) return "easy";
+  if (kd < 50) return "medium";
+  if (kd < 70) return "hard";
+  return "very hard";
+}
+
+function renderMetrics(concept) {
+  const m = metricsFor(concept.id);
+  if (!m) return;
+
+  const heading = el("h3", "Search interest");
+  if (metricsData.estimated) heading.appendChild(el("span", "Estimated", "estimate-badge"));
+  panel.appendChild(heading);
+
+  const dl = document.createElement("dl");
+  dl.className = "metrics";
+  const row = (term, value, hint) => {
+    dl.appendChild(el("dt", term));
+    const dd = el("dd", value);
+    if (hint) dd.appendChild(el("span", " " + hint, "rel-type"));
+    dl.appendChild(dd);
+  };
+  row("Keyword", `"${m.keyword}"`);
+  row(
+    "Monthly searches",
+    `${compactNumber.format(m.avgMonthlySearches.low)} to ${compactNumber.format(m.avgMonthlySearches.high)}`
+  );
+  row("Keyword difficulty", `${m.keywordDifficulty} / 100`, `(${difficultyLabel(m.keywordDifficulty)})`);
+  row("Cost per click", `$${m.cpc.low.toFixed(2)} to $${m.cpc.high.toFixed(2)}`);
+  panel.appendChild(dl);
+}
+
 // ---- Legend ----------------------------------------------------------------
 
 function buildLegend() {
@@ -246,7 +375,7 @@ function buildGraph() {
     .force("link", d3.forceLink(links).id((d) => d.id).distance(90).strength(0.6))
     .force("charge", d3.forceManyBody().strength(-260))
     .force("center", d3.forceCenter(width / 2, height / 2))
-    .force("collide", d3.forceCollide(26));
+    .force("collide", d3.forceCollide((d) => nodeRadius(d.id) + 16));
 
   linkSel = gRoot
     .append("g")
@@ -282,12 +411,12 @@ function buildGraph() {
 
   nodeSel
     .append("circle")
-    .attr("r", 10)
+    .attr("r", (d) => nodeRadius(d.id))
     .attr("fill", (d) => CATEGORY_COLORS[d.category] || "#888");
 
   nodeSel
     .append("text")
-    .attr("x", 14)
+    .attr("x", (d) => nodeRadius(d.id) + 4)
     .attr("y", 4)
     .text((d) => d.name);
 
@@ -402,6 +531,8 @@ function renderPanel(concept) {
     open.addEventListener("click", openLlmChart);
     panel.appendChild(open);
   }
+
+  renderMetrics(concept);
 
   // Related concepts
   panel.appendChild(el("h3", "Related concepts"));

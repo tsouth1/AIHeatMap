@@ -20,6 +20,16 @@
   <main class="layout">
     <section class="graph-wrap" aria-label="Concept graph">
       <svg id="graph" role="img" aria-label="Graph of AI concepts"></svg>
+      <div class="size-control">
+        <label for="size-by">Circle size</label>
+        <select id="size-by">
+          <option value="volume">Monthly searches</option>
+          <option value="kd">Keyword difficulty</option>
+          <option value="cpc">Cost per click</option>
+          <option value="none">Same size</option>
+        </select>
+        <span class="size-note">Estimates</span>
+      </div>
       <div id="legend" class="legend"></div>
     </section>
 

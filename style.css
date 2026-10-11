@@ -327,6 +327,65 @@ button:hover, button:focus-visible {
   font-size: 0.85rem;
 }
 
+.size-control {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.82rem;
+  color: var(--muted);
+  background: rgba(15, 20, 25, 0.8);
+  padding: 0.35rem 0.6rem;
+  border-radius: 6px;
+  max-width: calc(100% - 1.5rem);
+}
+
+.size-control select {
+  background: var(--panel-bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.2rem 0.35rem;
+  font-size: 0.82rem;
+}
+
+.size-note,
+.estimate-badge {
+  font-size: 0.7rem;
+  color: #e3b341;
+  border: 1px solid #6b5520;
+  border-radius: 999px;
+  padding: 0 0.4rem;
+  text-transform: none;
+  letter-spacing: 0;
+  cursor: help;
+}
+
+.estimate-badge {
+  margin-left: 0.5rem;
+  font-weight: 400;
+  cursor: default;
+}
+
+.panel .metrics {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.25rem 0.75rem;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.panel .metrics dt {
+  color: var(--muted);
+}
+
+.panel .metrics dd {
+  margin: 0;
+}
+
 /* Nodes that open a chart get a dashed outer ring */
 .node.has-chart circle {
   stroke: var(--text);
