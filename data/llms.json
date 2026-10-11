@@ -1,0 +1,131 @@
+{
+  "asOf": "2026-10-11",
+  "note": "Model versions change every few weeks. Each row lists the newest general-purpose release we found. Check the developer's site before relying on a detail.",
+  "sources": [
+    { "title": "Navigating the LLM Landscape (MindsHub, updated 2026-10-01)", "url": "https://mindshub.ai/blog/navigating-the-llm-landscape-a-comparative-analysis-of-leading-large-language-models" },
+    { "title": "AI models released in 2026 (LLM Gateway timeline)", "url": "https://llmgateway.io/timeline/2026" }
+  ],
+  "models": [
+    {
+      "family": "GPT",
+      "developer": "OpenAI",
+      "latest": "GPT-6.1 Sol, GPT-6 Astra",
+      "released": "2026-09",
+      "openWeights": "No",
+      "inputs": "Text, images",
+      "description": "The models behind ChatGPT. OpenAI ships several sizes at once, from small fast models to large reasoning models.",
+      "uses": "General chat, coding, agents that use a browser or tools, document work",
+      "url": "https://openai.com"
+    },
+    {
+      "family": "Claude",
+      "developer": "Anthropic",
+      "latest": "Claude Opus 5.5, Sonnet 5.5, Haiku 5.5",
+      "released": "2026-09",
+      "openWeights": "No",
+      "inputs": "Text, images",
+      "description": "Anthropic's assistant models, sold in tiers: Opus (most capable), Sonnet (balanced) and Haiku (fast and cheap). Ranked top overall in the MindsHub comparison.",
+      "uses": "Complex reasoning, coding, long documents, agent workflows",
+      "url": "https://www.anthropic.com/claude"
+    },
+    {
+      "family": "Gemini",
+      "developer": "Google",
+      "latest": "Gemini 4 Argon (limited access), Gemini 3.8 Flash",
+      "released": "2026-09",
+      "openWeights": "No",
+      "inputs": "Text, images, audio, video",
+      "description": "Google's model family, built into Search, Android and Workspace. Gemini 4 Argon is a new top model that is only open to selected partners so far.",
+      "uses": "Multimodal tasks such as video and audio, very long inputs, Google product integration",
+      "url": "https://deepmind.google/models/gemini/"
+    },
+    {
+      "family": "Grok",
+      "developer": "xAI (part of SpaceX)",
+      "latest": "Grok 4.7",
+      "released": "2026-09",
+      "openWeights": "No",
+      "inputs": "Text, images",
+      "description": "xAI's model, built into X (formerly Twitter). Known for live web and X search.",
+      "uses": "Current-events questions, long coding sessions with web access",
+      "url": "https://x.ai"
+    },
+    {
+      "family": "Muse Spark (and Llama)",
+      "developer": "Meta",
+      "latest": "Muse Spark 1.3",
+      "released": "2026",
+      "openWeights": "No (earlier Llama models are open)",
+      "inputs": "Text, images",
+      "description": "Muse Spark is Meta's first closed frontier model and powers the Meta AI assistant. Meta's earlier Llama models have open weights and are widely used by developers.",
+      "uses": "Meta AI in WhatsApp, Instagram and Facebook; Llama for self-hosted apps",
+      "url": "https://ai.meta.com"
+    },
+    {
+      "family": "Mistral",
+      "developer": "Mistral AI (France)",
+      "latest": "Mistral Large 4 (preview)",
+      "released": "2026-10",
+      "openWeights": "Planned (custom licence, late October 2026)",
+      "inputs": "Text, images",
+      "description": "Europe's best-known model maker. Many of its models can be downloaded and run on your own servers.",
+      "uses": "European data residency, self-hosting, enterprise apps",
+      "url": "https://mistral.ai"
+    },
+    {
+      "family": "DeepSeek",
+      "developer": "DeepSeek (China)",
+      "latest": "DeepSeek V4 Pro, V4.1 Flash",
+      "released": "2026-09",
+      "openWeights": "Yes (MIT)",
+      "inputs": "Text, images",
+      "description": "Open-weight models that compete with closed models at a much lower price.",
+      "uses": "Low-cost reasoning and coding, self-hosting, research",
+      "url": "https://www.deepseek.com"
+    },
+    {
+      "family": "Qwen",
+      "developer": "Alibaba (China)",
+      "latest": "Qwen3.8-Max, Qwen3.8 open models",
+      "released": "2026-09",
+      "openWeights": "Partly (Max is closed; many smaller models are open)",
+      "inputs": "Text, images",
+      "description": "A large family ranging from small open models that run on a laptop to the closed Max model.",
+      "uses": "Multilingual apps, fine-tuning a small open model, coding",
+      "url": "https://qwen.ai"
+    },
+    {
+      "family": "Kimi",
+      "developer": "Moonshot AI (China)",
+      "latest": "Kimi K3",
+      "released": "2026-07",
+      "openWeights": "Yes (commercial use restricted)",
+      "inputs": "Text, images",
+      "description": "The largest open-weight model released so far. Running it yourself needs datacenter hardware.",
+      "uses": "Agentic coding, long-context tasks, research",
+      "url": "https://www.kimi.com"
+    },
+    {
+      "family": "GLM",
+      "developer": "Z.ai (China)",
+      "latest": "GLM-5.3, GLM-5.3-Flash",
+      "released": "2026-10",
+      "openWeights": "Yes (MIT)",
+      "inputs": "Text, images",
+      "description": "Open-weight models with a cheap, fast Flash version.",
+      "uses": "Budget text and image work, coding assistants",
+      "url": "https://z.ai"
+    },
+    {
+      "family": "MiMo",
+      "developer": "Xiaomi (China)",
+      "latest": "MiMo-V2.6-Pro, MiMo-V2.6-Flash",
+      "released": "2026",
+      "openWeights": "Yes (MIT)",
+      "inputs": "Text, images, audio, video",
+      "description": "Open multimodal models from the phone maker. The Flash version was rated best value in the MindsHub comparison, though slow and wordy.",
+      "uses": "Low-cost multimodal tasks, on-device and self-hosted use",
+      "url": "https://mimo.xiaomi.com"
+    }
+  ]
+}

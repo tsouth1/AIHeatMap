@@ -480,6 +480,21 @@
       "resources": [
         { "title": "Chatbot (overview)", "tags": ["wiki", "community", "free"], "url": "https://en.wikipedia.org/wiki/Chatbot" }
       ]
+    },
+    {
+      "id": "leading-llms",
+      "name": "Leading LLMs",
+      "aliases": ["LLM list", "Model comparison", "GPT", "Claude", "Gemini", "Grok", "DeepSeek", "Qwen", "Mistral", "Llama"],
+      "category": "model",
+      "definition": "The large language models people use most today, such as GPT, Claude, Gemini, Grok and DeepSeek. Open the chart to compare who makes each one, whether you can download it, what it can read, and what it is good at.",
+      "chart": "llms",
+      "related": [
+        { "id": "llm", "type": "part_of" }
+      ],
+      "resources": [
+        { "title": "The Best LLMs in 2026: A Plain-English Comparison (MindsHub)", "tags": ["article", "vendor", "free"], "url": "https://mindshub.ai/blog/navigating-the-llm-landscape-a-comparative-analysis-of-leading-large-language-models" },
+        { "title": "AI models released in 2026 (LLM Gateway timeline)", "tags": ["tool", "vendor", "free"], "url": "https://llmgateway.io/timeline/2026" }
+      ]
     }
   ]
 }

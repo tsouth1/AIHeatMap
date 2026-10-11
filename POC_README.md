@@ -29,6 +29,7 @@ Then open http://localhost:8000 in a browser.
 - **Search** by name or alias (for example `RAG`, `Model Context Protocol`, `rag`). Arrow keys and Enter select a result.
 - **Drag** nodes to rearrange them. **Scroll** or pinch to zoom, and drag empty space to pan.
 - **Reset view** returns to the full graph.
+- **Leading LLMs** (dashed ring, linked to Large Language Model) has an **Open the LLM chart** button. It opens a table comparing current model families. Searching a family name such as `Gemini` or `DeepSeek` finds this node.
 - **Filter resources** (top of the side panel) has a checkbox per tag. Untick a tag to hide every resource that has it, even if its other tags are ticked. Your choices are remembered in this browser. **Show all** clears them.
 
 ## Adding or editing a concept
@@ -65,6 +66,12 @@ Rules:
 - To add a tag, add it to the right group in `tagGroups`. The filter box picks it up automatically. Unknown tags are logged to the browser console.
 - Check each resource link by hand before committing.
 
+## Updating the LLM chart
+
+The chart reads `data/llms.json`. Each entry in `models` has `family`, `developer`, `latest`, `released`, `openWeights`, `inputs`, `description`, `uses` and `url`. When you change it, update `asOf` and keep `sources` pointing at where the facts came from. Model versions change every few weeks, so re-check the chart before each user test.
+
+A concept opens the chart when it has `"chart": "llms"`.
+
 ## Content notes
 
 - Definitions are hand-written and simplified for beginners. Have a non-expert read them before testing.
@@ -78,6 +85,7 @@ index.html          Page layout
 style.css           Styling and responsive layout
 app.js              Graph, selection, side panel, search
 data/concepts.json  All concepts, relationships, and resources
+data/llms.json      Leading LLMs chart
 POC_PLAN.md         POC scope, steps, and acceptance criteria
 POC_README.md       This file
 ```

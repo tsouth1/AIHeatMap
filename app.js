@@ -238,7 +238,7 @@ function buildGraph() {
     if (event.target === svg.node()) clearSelection();
   });
 
-  const nodes = concepts.map((c) => ({ id: c.id, name: c.name, category: c.category }));
+  const nodes = concepts.map((c) => ({ id: c.id, name: c.name, category: c.category, hasChart: Boolean(c.chart) }));
   const links = buildLinkData();
 
   simulation = d3
@@ -264,7 +264,7 @@ function buildGraph() {
     .selectAll("g.node")
     .data(nodes, (d) => d.id)
     .join("g")
-    .attr("class", "node")
+    .attr("class", (d) => (d.hasChart ? "node has-chart" : "node"))
     .attr("tabindex", 0)
     .attr("role", "button")
     .attr("aria-label", (d) => d.name)
@@ -396,6 +396,13 @@ function renderPanel(concept) {
 
   panel.appendChild(el("p", concept.definition));
 
+  if (concept.chart === "llms") {
+    const open = el("button", "Open the LLM chart", "chart-open");
+    open.type = "button";
+    open.addEventListener("click", openLlmChart);
+    panel.appendChild(open);
+  }
+
   // Related concepts
   panel.appendChild(el("h3", "Related concepts"));
   const relList = document.createElement("ul");
@@ -452,6 +459,97 @@ function renderPanel(concept) {
     resList.appendChild(el("li", `${allResources.length - visible.length} more hidden by filters.`, "filtered-note"));
   }
   panel.appendChild(resList);
+}
+
+// ---- LLM chart -------------------------------------------------------------
+
+const chartDialog = document.getElementById("chart-dialog");
+const chartBody = document.getElementById("chart-body");
+let llmData = null;
+
+document.getElementById("chart-close").addEventListener("click", () => chartDialog.close());
+// Clicking the backdrop (outside the dialog box) closes it
+chartDialog.addEventListener("click", (event) => {
+  if (event.target === chartDialog) chartDialog.close();
+});
+
+async function openLlmChart() {
+  chartDialog.showModal();
+  if (llmData) return;
+
+  chartBody.textContent = "Loading…";
+  try {
+    const response = await fetch("data/llms.json");
+    if (!response.ok) throw new Error("HTTP " + response.status);
+    llmData = await response.json();
+    renderLlmChart(llmData);
+  } catch (err) {
+    chartBody.textContent = "Could not load the LLM chart. " + err.message;
+  }
+}
+
+function renderLlmChart(data) {
+  chartBody.innerHTML = "";
+  chartBody.appendChild(el("p", `As of ${data.asOf}. ${data.note}`, "chart-note"));
+
+  const columns = [
+    ["Model family", (m) => {
+      const a = el("a", m.family);
+      a.href = m.url;
+      a.target = "_blank";
+      a.rel = "noopener noreferrer";
+      const cell = document.createElement("div");
+      cell.appendChild(a);
+      cell.appendChild(el("div", m.developer, "chart-sub"));
+      return cell;
+    }],
+    ["Latest version", (m) => {
+      const cell = el("div", m.latest);
+      cell.appendChild(el("div", "Released " + m.released, "chart-sub"));
+      return cell;
+    }],
+    ["What it is", (m) => el("div", m.description)],
+    ["Common uses", (m) => el("div", m.uses)],
+    ["Reads", (m) => el("div", m.inputs)],
+    ["Open weights", (m) => el("div", m.openWeights)],
+  ];
+
+  const wrap = el("div", null, "chart-scroll");
+  const table = document.createElement("table");
+  table.className = "chart-table";
+  const headRow = document.createElement("tr");
+  for (const [label] of columns) {
+    const th = el("th", label);
+    th.scope = "col";
+    headRow.appendChild(th);
+  }
+  table.appendChild(document.createElement("thead")).appendChild(headRow);
+
+  const tbody = document.createElement("tbody");
+  for (const m of data.models) {
+    const tr = document.createElement("tr");
+    for (const [label, render] of columns) {
+      const td = document.createElement("td");
+      td.dataset.label = label;
+      td.appendChild(render(m));
+      tr.appendChild(td);
+    }
+    tbody.appendChild(tr);
+  }
+  table.appendChild(tbody);
+  wrap.appendChild(table);
+  chartBody.appendChild(wrap);
+
+  chartBody.appendChild(el("h3", "Sources"));
+  const list = document.createElement("ul");
+  for (const src of data.sources) {
+    const a = el("a", src.title);
+    a.href = src.url;
+    a.target = "_blank";
+    a.rel = "noopener noreferrer";
+    list.appendChild(document.createElement("li")).appendChild(a);
+  }
+  chartBody.appendChild(list);
 }
 
 // ---- Search ----------------------------------------------------------------
