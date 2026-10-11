@@ -343,6 +343,39 @@ button:hover, button:focus-visible {
   max-width: calc(100% - 1.5rem);
 }
 
+.graph3d {
+  position: absolute;
+  inset: 0;
+  touch-action: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+}
+
+.graph3d[hidden] { display: none; }
+
+.view-toggle {
+  display: inline-flex;
+  margin-right: 0.4rem;
+}
+
+.view-toggle button {
+  padding: 0.15rem 0.6rem;
+  font-size: 0.82rem;
+  border-radius: 0;
+}
+
+.view-toggle button:first-child { border-radius: 4px 0 0 4px; }
+.view-toggle button:last-child { border-radius: 0 4px 4px 0; margin-left: -1px; }
+
+.view-toggle button[aria-pressed="true"] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--bg);
+  font-weight: 600;
+}
+
 .size-control select {
   background: var(--panel-bg);
   color: var(--text);

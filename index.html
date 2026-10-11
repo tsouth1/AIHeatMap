@@ -20,7 +20,12 @@
   <main class="layout">
     <section class="graph-wrap" aria-label="Concept graph">
       <svg id="graph" role="img" aria-label="Graph of AI concepts"></svg>
+      <div id="graph3d" class="graph3d" hidden aria-label="3D graph of AI concepts. Use search to select a concept."></div>
       <div class="size-control">
+        <div class="view-toggle" role="group" aria-label="Graph view">
+          <button type="button" data-view="2d" aria-pressed="true">2D</button>
+          <button type="button" data-view="3d" aria-pressed="false">3D</button>
+        </div>
         <label for="size-by">Circle size</label>
         <select id="size-by">
           <option value="volume">Monthly searches</option>

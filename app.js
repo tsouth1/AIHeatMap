@@ -90,6 +90,7 @@ async function init() {
   buildGraph();
   bindSearch();
   bindSizeControl();
+  bindViewToggle();
 
   resetBtn.addEventListener("click", () => {
     clearSelection();
@@ -97,6 +98,7 @@ async function init() {
   });
 
   window.addEventListener("resize", () => {
+    resize3D();
     measure();
     simulation.force("center", d3.forceCenter(width / 2, height / 2));
     simulation.alpha(0.3).restart();
@@ -293,6 +295,7 @@ function applySizes() {
   nodeSel.select("text").transition().duration(400).attr("x", (d) => nodeRadius(d.id) + 4);
   simulation.force("collide", d3.forceCollide((d) => nodeRadius(d.id) + 16));
   simulation.alpha(0.3).restart();
+  resize3DNodes();
 }
 
 const compactNumber = new Intl.NumberFormat("en", { notation: "compact" });
@@ -474,6 +477,7 @@ function selectConcept(id, { focus = true } = {}) {
 
   renderPanel(concept);
 
+  refresh3DStyles();
   if (focus) focusNode(id);
 }
 
@@ -481,6 +485,7 @@ function clearSelection() {
   selectedId = null;
   nodeSel.classed("selected", false).classed("dimmed", false);
   linkSel.classed("dimmed", false);
+  refresh3DStyles();
   panel.innerHTML = "";
   const p = document.createElement("p");
   p.className = "placeholder";
@@ -489,6 +494,10 @@ function clearSelection() {
 }
 
 function focusNode(id) {
+  if (viewMode === "3d") {
+    focusNode3D(id);
+    return;
+  }
   const node = nodeSel.data().find((d) => d.id === id);
   if (!node || node.x == null) return;
 
@@ -501,7 +510,193 @@ function focusNode(id) {
 }
 
 function resetView() {
+  if (viewMode === "3d") {
+    graph3d?.zoomToFit(600, 40);
+    return;
+  }
   svg.transition().duration(500).call(zoomBehavior.transform, d3.zoomIdentity);
+}
+
+// ---- 3D view ---------------------------------------------------------------
+//
+// Uses 3d-force-graph (built on three.js). The library is only downloaded the
+// first time someone switches to 3D, so the default 2D view stays light.
+
+const GRAPH3D_URL = "https://cdn.jsdelivr.net/npm/3d-force-graph@1.80.1/+esm";
+// Must be the same three.js build that 3d-force-graph imports, so the label
+// sprites below are compatible with its scene.
+const THREE_URL = "https://cdn.jsdelivr.net/npm/three@0.186.1/+esm";
+
+const graph3dEl = document.getElementById("graph3d");
+let viewMode = "2d";
+let graph3d = null;
+let THREE = null;
+
+function bindViewToggle() {
+  for (const btn of document.querySelectorAll(".view-toggle button")) {
+    btn.addEventListener("click", () => setViewMode(btn.dataset.view));
+  }
+}
+
+async function setViewMode(mode) {
+  if (mode === viewMode) return;
+  viewMode = mode;
+  for (const btn of document.querySelectorAll(".view-toggle button")) {
+    btn.setAttribute("aria-pressed", String(btn.dataset.view === mode));
+  }
+
+  const is3D = mode === "3d";
+  svg.node().style.visibility = is3D ? "hidden" : "visible";
+  graph3dEl.hidden = !is3D;
+
+  if (!is3D) {
+    graph3d?.pauseAnimation();
+    if (selectedId) focusNode(selectedId);
+    return;
+  }
+
+  if (graph3d) {
+    resize3D();
+    graph3d.resumeAnimation();
+    if (selectedId) focusNode3D(selectedId);
+    return;
+  }
+
+  graph3dEl.textContent = "Loading 3D view…";
+  try {
+    const [lib, three] = await Promise.all([import(GRAPH3D_URL), import(THREE_URL)]);
+    THREE = three;
+    graph3dEl.textContent = "";
+    build3D(lib.default);
+  } catch (err) {
+    graph3dEl.textContent = "Could not load the 3D view. " + err.message;
+  }
+}
+
+function build3D(ForceGraph3D) {
+  const nodes = concepts.map((c) => ({ id: c.id, name: c.name, category: c.category }));
+  const links = buildLinkData();
+  let fitted = false;
+
+  graph3d = new ForceGraph3D(graph3dEl, { controlType: "orbit" })
+    .backgroundColor(getComputedStyle(document.documentElement).getPropertyValue("--bg").trim() || "#0f1419")
+    .showNavInfo(false)
+    .nodeRelSize(6)
+    .nodeResolution(16)
+    .nodeVal((d) => nodeVal3D(d.id))
+    .nodeColor((d) => nodeColor3D(d))
+    .nodeOpacity(0.95)
+    .nodeLabel(null)
+    .nodeThreeObjectExtend(true)
+    .nodeThreeObject((d) => makeLabel3D(d))
+    .linkColor((l) => linkColor3D(l))
+    .linkOpacity(0.55)
+    .linkWidth(0.6)
+    .onNodeClick((d) => selectConcept(d.id, { focus: true }))
+    .onBackgroundClick(() => clearSelection())
+    .cooldownTicks(150)
+    .onEngineStop(() => {
+      if (fitted) return;
+      fitted = true;
+      if (selectedId) focusNode3D(selectedId);
+      else graph3d.zoomToFit(600, 40);
+    })
+    .graphData({ nodes, links });
+
+  resize3D();
+}
+
+function resize3D() {
+  if (!graph3d || viewMode !== "3d") return;
+  const rect = graph3dEl.getBoundingClientRect();
+  graph3d.width(rect.width).height(rect.height);
+}
+
+// nodeVal is a volume; 3d-force-graph draws radius = cbrt(val) * nodeRelSize.
+// This keeps 3D sizes proportional to the 2D circle sizes.
+function nodeVal3D(id) {
+  return (nodeRadius(id) / DEFAULT_R) ** 3;
+}
+
+function radius3D(id) {
+  return (nodeRadius(id) / DEFAULT_R) * 6;
+}
+
+function isDimmed3D(id) {
+  if (!selectedId) return false;
+  return id !== selectedId && !(neighbors.get(selectedId) || new Set()).has(id);
+}
+
+function nodeColor3D(d) {
+  const base = CATEGORY_COLORS[d.category] || "#888888";
+  if (d.id === selectedId) return "#ffffff";
+  return isDimmed3D(d.id) ? d3.interpolateRgb(base, "#0f1419")(0.8) : base;
+}
+
+function linkColor3D(l) {
+  const base = REL_COLORS[l.type] || REL_COLORS.related_to;
+  if (!selectedId) return base;
+  const s = l.source.id ?? l.source;
+  const t = l.target.id ?? l.target;
+  return s === selectedId || t === selectedId ? base : "#1c232b";
+}
+
+// Text label drawn on a canvas and shown as a sprite that always faces the camera.
+function makeLabel3D(d) {
+  const fontSize = 48;
+  const canvas = document.createElement("canvas");
+  const ctx = canvas.getContext("2d");
+  const font = `600 ${fontSize}px system-ui, -apple-system, "Segoe UI", Roboto, sans-serif`;
+  ctx.font = font;
+  canvas.width = Math.ceil(ctx.measureText(d.name).width) + 24;
+  canvas.height = fontSize + 20;
+  ctx.font = font;
+  ctx.textBaseline = "middle";
+  ctx.lineWidth = 8;
+  ctx.strokeStyle = "#0f1419";
+  ctx.strokeText(d.name, 12, canvas.height / 2);
+  ctx.fillStyle = "#e6edf3";
+  ctx.fillText(d.name, 12, canvas.height / 2);
+
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  const material = new THREE.SpriteMaterial({ map: texture, transparent: true, depthWrite: false });
+  material.opacity = isDimmed3D(d.id) ? 0.2 : 1;
+  const sprite = new THREE.Sprite(material);
+  const height = 7;
+  sprite.scale.set((height * canvas.width) / canvas.height, height, 1);
+  sprite.position.set(0, radius3D(d.id) + 5, 0);
+  d.label3D = sprite;
+  return sprite;
+}
+
+function refresh3DStyles() {
+  if (!graph3d) return;
+  graph3d.nodeColor(graph3d.nodeColor()).linkColor(graph3d.linkColor());
+  for (const d of graph3d.graphData().nodes) {
+    if (d.label3D) d.label3D.material.opacity = isDimmed3D(d.id) ? 0.2 : 1;
+  }
+}
+
+function resize3DNodes() {
+  if (!graph3d) return;
+  graph3d.nodeVal(graph3d.nodeVal());
+  for (const d of graph3d.graphData().nodes) {
+    if (d.label3D) d.label3D.position.y = radius3D(d.id) + 5;
+  }
+}
+
+function focusNode3D(id) {
+  const node = graph3d?.graphData().nodes.find((d) => d.id === id);
+  if (!node || node.x == null) return;
+  const distance = 220;
+  const length = Math.hypot(node.x, node.y, node.z) || 1;
+  const ratio = 1 + distance / length;
+  graph3d.cameraPosition(
+    { x: node.x * ratio, y: node.y * ratio, z: node.z * ratio },
+    { x: node.x, y: node.y, z: node.z },
+    1000
+  );
 }
 
 // ---- Side panel ------------------------------------------------------------

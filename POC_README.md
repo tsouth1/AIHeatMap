@@ -30,6 +30,7 @@ Then open http://localhost:8000 in a browser.
 - **Drag** nodes to rearrange them. **Scroll** or pinch to zoom, and drag empty space to pan.
 - **Reset view** returns to the full graph.
 - **Leading LLMs** (dashed ring, linked to Large Language Model) has an **Open the LLM chart** button. It opens a table comparing current model families. Searching a family name such as `Gemini` or `DeepSeek` finds this node.
+- **2D / 3D** (top left of the graph) switches to a 3D view. Drag to rotate, scroll or pinch to zoom, right-drag to pan, and click a sphere to select it and fly to it. Search, the side panel, circle size and Reset view work in both. 2D is the default. The 3D view needs WebGL and is not keyboard accessible, so use search to select concepts there.
 - **Circle size** (top left of the graph) sizes each circle by its keyword's estimated monthly searches, keyword difficulty or cost per click, or makes them all the same size. The side panel shows all three under **Search interest**.
 - **Filter resources** (top of the side panel) has a checkbox per tag. Untick a tag to hide every resource that has it, even if its other tags are ticked. Your choices are remembered in this browser. **Show all** clears them.
 
@@ -106,6 +107,7 @@ POC_README.md       This file
 ## Dependencies
 
 - [D3.js v7](https://d3js.org), loaded from a CDN in `index.html`. No install step.
+- [3d-force-graph](https://github.com/vasturiano/3d-force-graph) 1.80.1 and [three.js](https://threejs.org) 0.186.1, loaded from jsDelivr only when someone switches to 3D. The two version numbers in `app.js` must stay matched, because the 3D labels are built with the same three.js the graph uses.
 
 ## Known limits of the POC
 
